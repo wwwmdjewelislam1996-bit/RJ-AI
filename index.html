@@ -1,307 +1,184 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RJ AI - Personal AI Assistant</title>
-
-<style>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    background: #10131b;
-    color: white;
-    font-family: Arial, sans-serif;
-    min-height: 100vh;
-}
-
-header {
-    height: 65px;
-    background: #191e2b;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 18px;
-    border-bottom: 1px solid #303746;
-}
-
-.logo {
-    font-size: 24px;
-    font-weight: bold;
-    color: #8b9cff;
-}
-
-.status {
-    font-size: 12px;
-    color: #39d98a;
-}
-
-main {
-    max-width: 850px;
-    margin: auto;
-    padding: 25px 16px 130px;
-}
-
-.welcome {
-    text-align: center;
-    margin: 45px 0 35px;
-}
-
-.welcome h1 {
-    font-size: 32px;
-    margin-bottom: 12px;
-}
-
-.welcome p {
-    color: #aab2c5;
-    font-size: 15px;
-}
-
-.features {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-bottom: 25px;
-}
-
-.card {
-    background: #1b2130;
-    border: 1px solid #343d50;
-    border-radius: 14px;
-    padding: 18px 10px;
-    text-align: center;
-    font-size: 14px;
-    color: #dce2f5;
-}
-
-.card span {
-    display: block;
-    font-size: 25px;
-    margin-bottom: 8px;
-}
-
-#chat {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.message {
-    padding: 14px;
-    border-radius: 14px;
-    line-height: 1.6;
-    max-width: 90%;
-    white-space: pre-wrap;
-}
-
-.user {
-    background: #354b83;
-    align-self: flex-end;
-}
-
-.bot {
-    background: #202737;
-    align-self: flex-start;
-}
-
-.input-area {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: #151a25;
-    padding: 12px;
-    border-top: 1px solid #343d50;
-}
-
-.input-box {
-    max-width: 850px;
-    margin: auto;
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    background: #252c3b;
-    border: 1px solid #414c61;
-    border-radius: 16px;
-    padding: 8px;
-}
-
-textarea {
-    flex: 1;
-    background: transparent;
-    border: none;
-    outline: none;
-    color: white;
-    resize: none;
-    font-size: 16px;
-    min-height: 42px;
-    padding: 10px 5px;
-}
-
-button {
-    border: none;
-    border-radius: 10px;
-    padding: 12px;
-    background: #657cff;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-button:active {
-    opacity: .7;
-}
-
-.tools {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 10px;
-}
-
-.tools button {
-    background: #252c3b;
-    border: 1px solid #414c61;
-    font-size: 13px;
-}
-
-.note {
-    text-align: center;
-    color: #7e8ba4;
-    font-size: 11px;
-    margin-top: 8px;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RJ AI - Personal AI Assistant</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --chat-bg: #1e293b;
+            --user-bg: #3b82f6;
+            --bot-bg: #334155;
+            --text-color: #f8fafc;
+            --border-color: #475569;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        header {
+            background-color: var(--chat-bg);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        #chat {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .message {
+            max-width: 75%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            line-height: 1.5;
+            word-wrap: break-word;
+        }
+        .message.user {
+            background-color: var(--user-bg);
+            align-self: flex-end;
+            border-bottom-right-radius: 2px;
+        }
+        .message.bot {
+            background-color: var(--bot-bg);
+            align-self: flex-start;
+            border-bottom-left-radius: 2px;
+        }
+        .input-area {
+            padding: 15px 20px;
+            background-color: var(--chat-bg);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 10px;
+        }
+        input {
+            flex: 1;
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-size: 16px;
+            outline: none;
+        }
+        button {
+            padding: 12px 20px;
+            border: none;
+            background-color: var(--user-bg);
+            color: white;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        button:hover {
+            background-color: #2563eb;
+        }
+    </style>
 </head>
-
 <body>
 
-<header>
-    <div class="logo">✦ RJ AI</div>
-    <div class="status">● Personal AI</div>
-</header>
+    <header>
+        <div class="logo">RJ AI Assistant</div>
+    </header>
 
-<main>
-
-    <section class="welcome" id="welcome">
-        <h1>হ্যালো! 👋</h1>
-        <p>আমি RJ AI — তোমার ব্যক্তিগত AI Assistant</p>
-        <br>
-        <p>আজ তোমাকে কীভাবে সাহায্য করতে পারি?</p>
-    </section>
-
-    <section class="features" id="features">
-        <div class="card">
-            <span>💬</span>
-            AI Chat
-        </div>
-
-        <div class="card">
-            <span>🎨</span>
-            AI Image Generator
-        </div>
-
-        <div class="card">
-            <span>🖼️</span>
-            Image Editing
-        </div>
-
-        <div class="card">
-            <span>📁</span>
-            File Assistant
-        </div>
-    </section>
-
-    <section id="chat"></section>
-
-</main>
-
-<div class="input-area">
-
-    <div class="tools">
-        <button onclick="newChat()">＋ New Chat</button>
-        <button onclick="imageMode()">🎨 Create Image</button>
+    <div id="chat">
+        <div class="message bot">হ্যালো জুয়েল ভাই! আমি আপনার ব্যক্তিগত এআই অ্যাসিস্ট্যান্ট। আজ আপনাকে কীভাবে সাহায্য করতে পারি?</div>
     </div>
 
-    <div class="input-box">
-        <textarea id="prompt" placeholder="RJ AI-কে কিছু জিজ্ঞাসা করো..."></textarea>
-        <button onclick="sendMessage()">➤</button>
+    <div class="input-area">
+        <input type="text" id="prompt" placeholder="এখানে কিছু লিখুন..." autocomplete="off">
+        <button onclick="sendMessage()">পাঠান</button>
     </div>
 
-    <div class="note">
-        RJ AI • Your Personal AI Assistant
-    </div>
+    <script>
+        const workerUrl = "https://rj-ai-backend.www-mdjewelislam1996.workers.dev";
 
-</div>
+        const promptInput = document.getElementById('prompt');
+        const chatContainer = document.getElementById('chat');
 
-<script>
+        promptInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
 
-let currentMode = "chat";
+        async function sendMessage() {
+            const text = promptInput.value.trim();
+            if (!text) return;
 
-function sendMessage() {
+            // Add User Message
+            appendMessage(text, 'user');
+            promptInput.value = '';
 
-    const input = document.getElementById("prompt");
-    const chat = document.getElementById("chat");
+            // Add Loading Bot Message
+            const loadingId = appendThinkingMessage();
 
-    const text = input.value.trim();
+            try {
+                const response = await fetch(workerUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ message: text })
+                });
 
-    if (!text) return;
+                const data = await response.json();
+                removeMessage(loadingId);
 
-    document.getElementById("welcome").style.display = "none";
-    document.getElementById("features").style.display = "none";
+                if (data && data.response) {
+                    appendMessage(data.response, 'bot');
+                } else if (data && data.message) {
+                    appendMessage(data.message, 'bot');
+                } else {
+                    appendMessage("দুঃখিত, কোনো উত্তর পাওয়া যায়নি।", 'bot');
+                }
+            } catch (error) {
+                removeMessage(loadingId);
+                appendMessage("সার্ভারের সাথে সংযোগ স্থাপন করতে সমস্যা হচ্ছে।", 'bot');
+            }
+        }
 
-    const user = document.createElement("div");
-    user.className = "message user";
-    user.textContent = text;
-    chat.appendChild(user);
+        function appendMessage(text, sender) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `message ${sender}`;
+            msgDiv.textContent = text;
+            chatContainer.appendChild(msgDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            return msgDiv;
+        }
 
-    const bot = document.createElement("div");
-    bot.className = "message bot";
+        function appendThinkingMessage() {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'message bot';
+            msgDiv.textContent = 'এআই ভাবছে...';
+            chatContainer.appendChild(msgDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            return msgDiv;
+        }
 
-    if (currentMode === "image") {
-        bot.textContent =
-        "🎨 Image Generator নির্বাচিত হয়েছে।\n\nAI Image Generation Engine এখনো সংযুক্ত করা হয়নি। পরবর্তী ধাপে এটি যুক্ত করব।";
-    } else {
-        bot.textContent =
-        "👋 স্বাগতম! এটি RJ AI-এর প্রথম সংস্করণ।\n\nAI Model এখনো সংযুক্ত করা হয়নি। পরবর্তী ধাপে আসল AI যুক্ত করব।";
-    }
-
-    chat.appendChild(bot);
-
-    input.value = "";
-    window.scrollTo(0, document.body.scrollHeight);
-}
-
-function imageMode() {
-    currentMode = "image";
-    document.getElementById("prompt").placeholder =
-    "কেমন ছবি তৈরি করতে চাও তা লেখো...";
-    document.getElementById("prompt").focus();
-}
-
-function newChat() {
-    document.getElementById("chat").innerHTML = "";
-    document.getElementById("welcome").style.display = "block";
-    document.getElementById("features").style.display = "grid";
-
-    currentMode = "chat";
-
-    document.getElementById("prompt").placeholder =
-    "RJ AI-কে কিছু জিজ্ঞাসা করো...";
-}
-
-document.getElementById("prompt").addEventListener("keydown", function(e) {
-    if (e.key === "Enter" && !e.shiftKey) {
-        e.preventDefault();
-        sendMessage();
-    }
-});
-
-</script>
-
+        function removeMessage(msgDiv) {
+            if (msgDiv && msgDiv.parentNode) {
+                msgDiv.parentNode.removeChild(msgDiv);
+            }
+        }
+    </script>
 </body>
 </html>
+
